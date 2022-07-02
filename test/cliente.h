@@ -5,7 +5,7 @@
 #ifndef REPLACEMENTSELECTION_CLIENTE_H
 #define REPLACEMENTSELECTION_CLIENTE_H
 
-#include "../src/core.h"
+#include "../src/replacement_selection.h"
 #include <stdio.h>
 
 typedef struct{

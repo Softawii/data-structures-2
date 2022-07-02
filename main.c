@@ -4,15 +4,10 @@
 #include <string.h>
 
 #include "test/cliente.h"
-#include "src/core.h"
+#include "src/intercalation.h"
+#include "src/replacement_selection.h"
+#include "src/utils.h"
 #include <dirent.h>
-
-bool starts_with(const char *pre, const char *str)
-{
-    size_t  lenpre = strlen(pre),
-            lenstr = strlen(str);
-    return lenstr < lenpre ? false : memcmp(pre, str, lenpre) == 0;
-}
 
 void show_file(char * file_name, from_stream from) {
     FILE * file = fopen(file_name, "rb");
@@ -110,17 +105,20 @@ void generate_clientes(char * output_file, int64_t size) {
 
 int main() {
 
-    printf("Generating Clients!\n");
-    generate_clientes("clientes.dat", 50);
+//    printf("Generating Clients!\n");
+//    generate_clientes("clientes.dat", 50);
+//
+//    printf("Generating Partitions!\n");
+//    generate_partitions(5, "clientes.dat", cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
+//                        (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
+//
+//    printf("Showing Source File!\n");
+//    show_file("clientes.dat", cliente_from_stream);
+//
+//    file_manager();
 
-    printf("Generating Partitions!\n");
-    generate_partitions(5, "clientes.dat", cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
-                        (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
-
-    printf("Showing Source File!\n");
-    show_file("clientes.dat", cliente_from_stream);
-
-    file_manager();
+    intercalation(4, "partition_", cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
+                  (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
 
     printf("Hello, World!\n");
     return 0;
