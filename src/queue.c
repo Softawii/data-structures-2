@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "queue.h"
 
-static struct Node {
+struct Node {
     void *value;
     struct Node *next;
 };
@@ -95,12 +95,11 @@ void freeQueue(struct Queue *q)
         if (tmp->value != NULL) {
             free(tmp->value);
         }
-
         free(tmp);
     }
 
     if (q->tail != NULL) {
-        free(q->tail);
+        q->tail = NULL;
     }
 
     free (q);
