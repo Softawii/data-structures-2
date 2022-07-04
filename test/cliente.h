@@ -17,21 +17,16 @@ typedef struct{
 
 var  cliente_from_stream(FILE * file) {
 
-    long curr = ftell(file);
-    fseek(file, 0L, SEEK_END);
-    long size = ftell(file);
-    fseek(file, curr, SEEK_SET);
+    cliente *temp = (cliente *) malloc(sizeof(cliente));
 
-    if(ftell(file) < size) {
-        cliente *temp = (cliente *) malloc(sizeof(cliente));
+    fread(&temp->id, sizeof(temp->id), 1, file);
+    fread(temp->nome, sizeof(temp->nome), 1, file);
+    size_t read = fread(temp->nascimento, sizeof(temp->nascimento), 1, file);
 
-        fread(&temp->id, sizeof(temp->id), 1, file);
-        fread(temp->nome, sizeof(temp->nome), 1, file);
-        fread(temp->nascimento, sizeof(temp->nascimento), 1, file);
-        // Return
-        return temp;
-    }
-    return NULL;
+    if(read == 0) return NULL;
+
+    // Return
+    return temp;
 }
 
 void cliente_to_stream(FILE * file, cliente * c) {

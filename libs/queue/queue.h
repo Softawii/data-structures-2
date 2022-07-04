@@ -17,4 +17,6 @@ extern void* dequeue(struct Queue *q);
 
 extern void freeQueue(struct Queue *q);
 
+extern int queueSize(struct Queue *q);
+
 #endif //REPLACEMENTSELECTION_QUEUE_H

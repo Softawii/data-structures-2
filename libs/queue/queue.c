@@ -33,6 +33,10 @@ struct Queue* newQueue(int capacity)
     return q;
 }
 
+int queueSize(struct Queue *q) {
+    return q->size;
+}
+
 int enqueue(struct Queue *q, void *value)
 {
     if ( ((q->size + 1) > q->max_size) && (q->max_size > 0) ) {
