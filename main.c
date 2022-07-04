@@ -105,17 +105,17 @@ void generate_clientes(char * output_file, int64_t size) {
 
 int main() {
 
-//    printf("Generating Clients!\n");
-//    generate_clientes("clientes.dat", 50);
-//
-//    printf("Generating Partitions!\n");
-//    generate_partitions(5, "clientes.dat", cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
-//                        (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
-//
-//    printf("Showing Source File!\n");
-//    show_file("clientes.dat", cliente_from_stream);
-//
-//    file_manager();
+    printf("Generating Clients!\n");
+    generate_clientes("clientes.dat", 50);
+
+    printf("Generating Partitions!\n");
+    generate_partitions(5, "clientes.dat", cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
+                        (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
+
+    printf("Showing Source File!\n");
+    show_file("clientes.dat", cliente_from_stream);
+
+    file_manager();
 
     intercalation(4, "partition_", cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
                   (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
