@@ -12,9 +12,23 @@
 #include <string.h>
 #include <dirent.h>
 #include "core.h"
-#include "queue.h"
+#include "../libs/queue/queue.h"
 #include "utils.h"
+#include "../libs/pqueue/pqueue.h"
 
+typedef struct {
+    FILE       * file;
+    var          next;
+    comparator * comp;
+    char       * name;
+} FileStream;
+
+
+int file_stream_comparator (var a, var b) {
+    FileStream * fs_a = (FileStream *) a;
+    FileStream * fs_b = (FileStream *) b;
+    return (*fs_a->comp)(fs_a->next, fs_b->next);
+}
 
 Queue* set_queue(char * prefix) {
     DIR *d;
@@ -39,10 +53,27 @@ Queue* set_queue(char * prefix) {
 }
 
 void intercalation(int64_t max_files, char * file_prefix, from_stream from, to_stream to, comparator comp, show show) {
-    Queue * queue = set_queue(file_prefix);
+    Queue * partitions_queue = set_queue(file_prefix);
 
 
-    freeQueue(queue);
+    // It's in a loop, max files - 1 times, because we need to intercalate all files.
+    char* file_name = dequeue(partitions_queue);
+
+    // Construct the file stream.
+    FileStream * file_stream = malloc(sizeof(FileStream));
+
+    file_stream->file = fopen(file_name, "rb");
+    file_stream->name = file_name;
+    file_stream->comp = comp;
+    file_stream->next = from(file_stream->file);
+
+    PQueue * file_streams = pqueue_new((int (*)(const void *, const void *)) file_stream_comparator, max_files - 1);
+
+    pqueue_enqueue(file_streams, file_stream);
+
+
+    freeQueue(partitions_queue);
+    pqueue_delete(file_streams);
 }
 
 #endif //REPLACEMENTSELECTION_INTERCALATION_H

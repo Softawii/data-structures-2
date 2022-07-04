@@ -62,7 +62,7 @@ var_status * min(var_status * elements, int64_t length, comparator comp) {
     return temp;
 }
 
-void generate_partitions(int64_t number_of_registries, char * input_file, from_stream from, to_stream to, comparator comp, show show) {
+void generate_partitions(int64_t number_of_registries, char * input_file,  from_stream from, to_stream to, comparator comp, show show) {
 
     FILE * source;
     FILE * target;
