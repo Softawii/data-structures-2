@@ -78,7 +78,7 @@ void *pqueue_dequeue(PQueue *q) {
     NP_CHECK(q);
     if (q->size < 1) {         
          /* Priority Queue is empty */         
-         DEBUG("Priority Queue underflow . Cannot remove another element .");         
+//         DEBUG("Priority Queue underflow . Cannot remove another element .");
          return NULL;     
     }     
     data = q->data[0];
