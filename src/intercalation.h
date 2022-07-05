@@ -128,7 +128,12 @@ void intercalation(int64_t max_files, char * file_prefix, char * final_output, f
         intercalation_iteration(output_file, file_streams, from, to, show);
 
         if (queueSize(partitions_queue) == 0) {
-            rename(output_file, final_output);
+            remove(final_output);
+
+            if(rename(output_file, final_output) != 0) {
+                printf("Error renaming file, %s\n", strerror(errno));
+            }
+
             break;
         } else {
             // Adding current file to queue

@@ -45,7 +45,7 @@ def generate_file(size):
     newFile.close()
 
 
-generate_file(50)
+generate_file(150)
 
 
 
