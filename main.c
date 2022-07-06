@@ -3,10 +3,10 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "test/cliente.h"
-#include "src/intercalation.h"
-#include "src/replacement_selection.h"
-#include "src/utils.h"
+#include "include/client/cliente.h"
+#include "include/core/intercalation.h"
+#include "include/core/replacement_selection.h"
+#include "include/utils/utils.h"
 #include <dirent.h>
 
 void show_file(char * file_name, from_stream from) {
@@ -44,10 +44,17 @@ void file_manager() {
     }
 }
 
-int main() {
 
-    char source_file[255] = "../libs/mock/db.dat";
-    char output_file[255] = "../libs/mock/sorted.dat";
+int main(int argc, char **argv) {
+
+    // Argc = exe, source, dest
+    if(argc != 3) {
+        printf("ERROR: You need pass two arguments, like: %s <source> <dest>\n", argv[0]);
+        exit(1);
+    }
+
+    char * source_file = argv[1];
+    char * output_file = argv[2];
 
     printf("Generating Partitions!\n");
     generate_partitions(5, source_file, cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,

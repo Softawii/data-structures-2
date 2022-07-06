@@ -1,31 +1,8 @@
 //
-// Created by yancf on 26/06/2022.
+// Created by yancf on 05/07/2022.
 //
 
-#ifndef REPLACEMENTSELECTION_REPLACEMENT_SELECTION_H
-#define REPLACEMENTSELECTION_REPLACEMENT_SELECTION_H
-
-#include "core.h"
-
-// #define DEBUG
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
-
-typedef enum STATE {
-    FREEZE   = 0,
-    ENABLED  = 1,
-    NULLABLE = 2
-} STATE;
-
-
-typedef struct {
-    var    value;
-    STATE status;
-} var_status;
-
+#include "../../include/core/replacement_selection.h"
 
 bool all_freeze(var_status * elements, int64_t length) {
     for(int64_t index = 0; index < length; index++) if(elements[index].status == ENABLED) return false;
@@ -89,9 +66,9 @@ void generate_partitions(int64_t number_of_registries, char * input_file,  from_
         last = NULL;
         unfreeze(elements, number_of_registries);
 
-        #ifdef DEBUG
+#ifdef DEBUG
         printf("Creating Partition %s\n", output_file);
-        #endif
+#endif
         // Creating File
         if ((target = fopen(output_file, "wb")) == NULL) {
             printf("partitions: Erro ao abrir arquivo\n");
@@ -111,10 +88,10 @@ void generate_partitions(int64_t number_of_registries, char * input_file,  from_
                 // Write it without comparing
                 to(target, temp->value);
 
-                #ifdef DEBUG
+#ifdef DEBUG
                 printf("\tWrote in File: ");
                 show(temp->value);
-                #endif
+#endif
 
                 // The New Last
                 last = temp->value;
@@ -128,10 +105,10 @@ void generate_partitions(int64_t number_of_registries, char * input_file,  from_
                     // Write!
                     to(target, temp->value);
 
-                    #ifdef DEBUG
+#ifdef DEBUG
                     printf("\tWrote in File: ");
                     show(temp->value);
-                    #endif
+#endif
 
                     // Free the Last (we don't need memory leaks)
                     free(last);
@@ -156,6 +133,3 @@ void generate_partitions(int64_t number_of_registries, char * input_file,  from_
     }
     fclose(source);
 }
-
-
-#endif //REPLACEMENTSELECTION_REPLACEMENT_SELECTION_H

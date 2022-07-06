@@ -5,6 +5,8 @@
 #ifndef REPLACEMENTSELECTION_CORE_H
 #define REPLACEMENTSELECTION_CORE_H
 
+#include <stdio.h>
+
 typedef void * var;
 typedef var  (from_stream)(FILE *);
 typedef void (to_stream)  (FILE *, var);

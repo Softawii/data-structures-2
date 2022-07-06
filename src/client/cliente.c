@@ -1,19 +1,7 @@
 //
-// Created by yancf on 26/06/2022.
+// Created by yancf on 05/07/2022.
 //
-
-#ifndef REPLACEMENTSELECTION_CLIENTE_H
-#define REPLACEMENTSELECTION_CLIENTE_H
-
-#include "../src/replacement_selection.h"
-#include <stdio.h>
-
-typedef struct{
-    int id;
-    char nome[50];
-    char nascimento[11];
-}cliente;
-
+#include "../../include/client/cliente.h"
 
 var  cliente_from_stream(FILE * file) {
 
@@ -50,7 +38,3 @@ int id_comparator (cliente * a, cliente * b) {
     else
         return -1;
 }
-
-
-#endif //REPLACEMENTSELECTION_CLIENTE_H
-

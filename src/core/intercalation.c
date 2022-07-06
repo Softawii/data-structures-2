@@ -1,27 +1,7 @@
 //
-// Created by yancf on 02/07/2022.
+// Created by yancf on 05/07/2022.
 //
-
-#ifndef REPLACEMENTSELECTION_INTERCALATION_H
-#define REPLACEMENTSELECTION_INTERCALATION_H
-
-#include <stdint.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dirent.h>
-#include "core.h"
-#include "../libs/queue/queue.h"
-#include "utils.h"
-#include "../libs/priority_queue/pqueue.h"
-
-typedef struct {
-    FILE       * file;
-    var          next;
-    comparator * comp;
-    char       * name;
-} FileStream;
+#include "../../include/core/intercalation.h"
 
 
 int file_stream_comparator (var a, var b) {
@@ -133,7 +113,6 @@ void intercalation(int64_t max_files, char * file_prefix, char * final_output, f
             if(rename(output_file, final_output) != 0) {
                 printf("Error renaming file, %s\n", strerror(errno));
             }
-
             break;
         } else {
             // Adding current file to queue
@@ -142,10 +121,9 @@ void intercalation(int64_t max_files, char * file_prefix, char * final_output, f
             enqueue(partitions_queue, _file);
         }
     }
-    
+
     // Ending
     freeQueue(partitions_queue);
     pqueue_delete(file_streams);
 }
 
-#endif //REPLACEMENTSELECTION_INTERCALATION_H
