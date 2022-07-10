@@ -48,7 +48,7 @@ void file_manager() {
 int main(int argc, char **argv) {
 
     // Argc = exe, source, dest
-    if(argc != 3) {
+    if(argc < 3) {
         printf("ERROR: You need pass two arguments, like: %s <source> <dest>\n", argv[0]);
         exit(1);
     }
@@ -56,16 +56,35 @@ int main(int argc, char **argv) {
     char * source_file = argv[1];
     char * output_file = argv[2];
 
+    int max_files            = 4;
+    int registries_in_memory = 5;
+
+    for(int i = 3; i < argc; i++) {
+        if(strcmp(argv[i], "--max-files") == 0 && (i + 1) < argc) {
+            max_files = atoi(argv[i + 1]);
+            i++;
+        } else if(strcmp(argv[i], "--registries-in-memory") == 0 && (i + 1) < argc) {
+            registries_in_memory = atoi(argv[i + 1]);
+            i++;
+        } else {
+            printf("ERROR: Unknown argument '%s'\n", argv[i]);
+            exit(1);
+        }
+    }
+
+    printf("Max Files: %d\n", max_files);
+    printf("Registries in Memory: %d\n", registries_in_memory);
+    printf("\n\n");
+
     printf("Generating Partitions!\n");
-    generate_partitions(5, source_file, cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
-                        (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
+    generate_partitions(registries_in_memory, source_file, cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream, (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
 
     printf("Showing Source File!\n");
     show_file(source_file, cliente_from_stream);
 
     file_manager();
 
-    intercalation(4, "partition_", output_file, cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
+    intercalation(max_files, "partition_", output_file, cliente_from_stream, (void (*)(FILE *, var)) cliente_to_stream,
                   (int (*)(var, var)) id_comparator, (void (*)(var)) cliente_show);
 
     printf("Showing Output File!\n");
