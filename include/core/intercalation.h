@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
+#include <errno.h>
 #include "core.h"
 #include "../../libs/queue/queue.h"
 #include "../utils/utils.h"
